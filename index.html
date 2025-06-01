@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Grievance Portal</title>
+<style>
+  body {
+    background: url('cats.jpg') no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    color: #6b2c4a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+  #container {
+    background: rgba(255, 240, 246, 0.85);
+    padding: 30px 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(107, 44, 74, 0.25);
+    width: 350px;
+    text-align: center;
+  }
+  h1 {
+    font-weight: 700;
+    margin-bottom: 15px;
+    font-size: 1.8rem;
+  }
+  p {
+    margin-top: 0;
+    font-size: 1rem;
+    color: #a14b6b;
+  }
+  label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+  textarea {
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    border: 2px solid #f2c1d1;
+    border-radius: 15px;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    font-size: 1rem;
+    resize: none;
+    outline: none;
+  }
+  textarea:focus {
+    border-color: #c4628a;
+  }
+  button {
+    margin-top: 15px;
+    padding: 10px 25px;
+    background-color: #c4628a;
+    border: none;
+    border-radius: 15px;
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+  }
+  button:hover {
+    background-color: #9e3c5e;
+  }
+  #thankYouMessage {
+    display: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #8a3363;
+  }
+</style>
+</head>
+<body>
+  <div id="container">
+    <div id="mainContent">
+      <h1>Welcome to your very own grievance portal, love</h1>
+      <p>Submit your lame, stupid, or critical complaints, real, imagined, or otherwise.</p>
+      
+      <form id="grievanceForm" action="https://formspree.io/f/mrbkzvov" method="POST">
+        <label for="complaint">State your grievance, darling.<br />Try to keep the drama under 500 words. Or don’t.</label>
+        <textarea id="complaint" name="complaint" maxlength="500" required></textarea>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+
+    <p id="thankYouMessage">
+      Thank you, your grievance has been sent to Kritika.<br />
+      She’ll get back to you soon after carefully weighing its urgency and emotional damage.
+    </p>
+  </div>
+
+<script>
+  const form = document.getElementById('grievanceForm');
+  const mainContent = document.getElementById('mainContent');
+  const thankYouMessage = document.getElementById('thankYouMessage');
+  
+  form.addEventListener('submit', function(event) {
+    event.preventDefault();
+    const data = new FormData(form);
+    
+    fetch(form.action, {
+      method: 'POST',
+      body: data,
+      headers: {
+        'Accept': 'application/json'
+      }
+    }).then(response => {
+      if (response.ok) {
+        mainContent.style.display = 'none';
+        thankYouMessage.style.display = 'block';
+        form.reset();
+      } else {
+        alert('Oops! Something went wrong.');
+      }
+    }).catch(error => {
+      alert('Oops! Network error or something weird.');
+    });
+  });
+</script>
+</body>
+</html>
